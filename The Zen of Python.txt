@@ -1,7 +1,4 @@
-1. Beautiful is better than ugly.
-
-=======
-thfk
+Explicit is better than implicit
 тут все є :)
 thfk
 12345678976543
