@@ -12,10 +12,10 @@ elif operation=="//":
 elif operation=="%":
   print(a%b)
 elif operation=="/":
-    if(b)<=0:
-        print("division by zero")
+    if(b)!=0:
+        print(a/b)
     else:
-        print(a / b)
+        print("division by zero")
 else:
  print("You have not typed a valid operator, please run the program again.")
 
