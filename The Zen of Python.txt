@@ -1,4 +1,0 @@
-This is Zen of Python
-thfk
-тут все є :)
-4. Complex is better than complicated.
