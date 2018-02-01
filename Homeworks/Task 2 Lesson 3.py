@@ -18,4 +18,4 @@ print "Summ of numbers:", d1 + d2 + d3 + d4
 
 print "Reverse from number is:",  d1, d2, d3, d4
 
-print " ".join(b)
+print "The value from the smallest to the largest: ", " ".join(b)
