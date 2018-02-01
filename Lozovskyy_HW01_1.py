@@ -1,5 +1,6 @@
 answer = raw_input ("Hello, Could I ask you few questions?\n")
-if answer == "yes":
+
+if answer == "yes" or "YES":
     print "Question one:"
     name = raw_input ("What is your name?\n")
     age = raw_input ("How old are you?\n")
@@ -10,4 +11,4 @@ if answer == "yes":
  in {:.2f}\n".format(name, age, city, salary)
     print "Thank you for your attention and cooperation!"
 else:
-print "Excuse me please..."
+    print "Excuse me please..."
