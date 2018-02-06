@@ -4,9 +4,9 @@ age = raw_input("Haw old are you?\n")
 	
 live_place = raw_input("Where are you live?\n")
 
-salary = input("What is your salary?\n")
+salary = raw_input("What is your salary?\n")
 
 print ('Hello, {}!\nYour age is {}\
-       .\nYou live in {}.\nYour salary {:.2f}'.format(name,age,live_place,salary))
+       .\nYou live in {}.\nYour salary {:2e}'.format(name,age,live_place,salary))
 
 
