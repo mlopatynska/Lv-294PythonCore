@@ -29,6 +29,17 @@ sum_of_number += number // 1000 % 10
 
 print("The second way: {}\n".format(sum_of_number))
 
+#Third way.
+number = str(number)
+sum_of_number = 0
+
+sum_of_number += int(number[0])
+sum_of_number += int(number[1])
+sum_of_number += int(number[2])
+sum_of_number += int(number[3])
+
+print("The third way: {}\n".format(sum_of_number))
+
 #Test - 2.b
 
 number = str(number)
