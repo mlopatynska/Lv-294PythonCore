@@ -3,7 +3,7 @@ b =  input('Enter the value for second side:\n')
 c =  input('Enter the value for third side:\n')
 if a + b >= c and a + c >= b and b + c >= a:
     p = a + b + c
-    print('Perimetr of the triangle is {}.'.format(p))
+    print('Perimeter of the triangle is {}.'.format(p))
     p /= 2
     a = (p*(p-a)*(p-b)*(p-c)) ** 0.5
     print('Area of the triangle is {:.2f}.'.format(a))
