@@ -57,10 +57,9 @@
 
 #Even and odd counter:
 
-num = 456
-snum = str(num)
+num = 12345678
 dict = {'even': 0,'odd': 0}
-for i in snum:
+for i in str(num):
     if int(i) % 2:
         dict['odd'] += 1
     else:
