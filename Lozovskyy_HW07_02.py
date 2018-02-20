@@ -8,12 +8,12 @@ def factorial(x):
     else:
         return res
 F = 1.00000
-n = int(input("Enter number 1:\n"))
-m = int(input("Enter number 2:\n"))
+n = input("Enter number 1:\n")
+m = input("Enter number 2:\n")
 
 
 # F = x*y/z
-F = (factorial(n)*factorial(m))+factorial(n+m)
+F = (float(factorial(n))*factorial(m))/factorial(n+m)
 print "n! is {}, m! is {}, (n+m)! is: {}".format\
     (factorial(n),factorial(m),factorial(n+m))
 print "Result of function n!*m!/(n+m)! is: {0:.5f}".format(F)
