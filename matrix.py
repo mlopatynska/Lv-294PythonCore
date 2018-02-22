@@ -7,7 +7,7 @@ print(Matrix2)
 
 def max(n):
     for j in range (len(n)):
-        for x in rangesplit(j):
+        for x in range(j):
             if n[x] < n[x+1]:
                 return n[x + 1]
 
