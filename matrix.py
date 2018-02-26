@@ -13,3 +13,15 @@ def max(n):
 
 
 print(max(Matrix1), max(Matrix2))
+
+# def maximum(mas):
+#     a=[]
+#     for x in mas:
+#         a.append(mas(x))
+#         a.append(x)
+#         b=max(a)
+#     return (b)
+# d1=max(Matrix1)
+# d2=max(Matrix2)
+# fin=max([d1,d2])
+# print(fin)
