@@ -1,4 +1,4 @@
-#Real numbers will be counted with step 1, only first number is requested.
+#Real numbers will be counted with 1 step forward, only first number is requested.
 a = input('Enter your a0 number:\n')
 b = input('Enter your b0 number:\n')
 c = input('Enter your c0 number:\n')
