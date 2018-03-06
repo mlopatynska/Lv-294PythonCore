@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Welcome to page!</h1>
+    {% if username %}
+        <h2>Hello, {{username}}!</h2>
+    {% else %}
+        <h2>Hello, anonymous...</h2>
+    {% endif %}
+    <h3><a href="{{url_for("index")}}">link to index page</a></h3>
+</body>
+</html>
