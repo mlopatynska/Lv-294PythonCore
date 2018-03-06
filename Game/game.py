@@ -5,7 +5,7 @@ import random
 _WEIGHT = 1024
 _LENGTH = 720
 _PLAY = True
-_time = pygame.time.Clock()
+time = pygame.time.Clock()
 
 
 class Ball():
@@ -30,10 +30,10 @@ class Ball():
         self.start_y -= self.direction_of_movement
         if self.start_y <= 0:
             self.start_y = 0
-            self.direction_of_movement = 1
+            self.direction_of_movement = -1
         elif self.start_y >= 720:
             self.start_y = 720
-            self.direction_of_movement = -1
+            self.direction_of_movement = 1
         self.draw()
 
 pygame.init()
@@ -41,14 +41,16 @@ screen = pygame.display.set_mode((_WEIGHT,_LENGTH))
 pygame.display.set_caption("My Game")
 
 ball = Ball()
-_time.tick(30)
+
 while _PLAY:
+    time.tick(30)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 _PLAY = False
-    pygame.blit(0,0,0)
+    screen.fill([0,0,0])
     ball.move()
+    print(ball.left_and_right_corner)
     pygame.display.flip()
 
 pygame.quit()
