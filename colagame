@@ -1,0 +1,86 @@
+import pygame
+from random import randint
+pygame.init()
+
+screen = pygame.display.set_mode((600, 600))
+clock = pygame.time.Clock()
+pygame.display.set_caption("MyGameBear")
+white=(255,255,255)
+red=(255,0,0)
+green=(0,128,0)
+blue=(0,0,225)
+black=(0,0,0)
+running = True
+
+class Beer():
+
+    def __init__(self):
+        self.image_1715=pygame.image.load("Cola.png")
+        self.x = randint(0,600)
+        self.y = randint(-1000,-1)
+        self.change_x = 0
+        self.change_y = 4
+
+
+    def move(self):
+
+        self.x+= self.change_x
+        self.y+= self.change_y
+
+    def draw(self):
+        screen.blit(self.image_1715,[self.x, self.y ])
+        if (self.y > 800):
+            self.y = 0
+        self.y += 1
+
+class Tara():
+
+    def __init__(self):
+
+        self.image_tara = pygame.image.load("Bus.png")
+        self.x = 0
+        self.y = 536
+
+    def Tara_move(self):
+
+        key = pygame.key.get_pressed()
+        dist = 10
+        if key[pygame.K_RIGHT]:
+            self.x += dist
+        elif key[pygame.K_LEFT]:
+            self.x -= dist
+
+    def draw(self, surface):
+        surface.blit(self.image_tara, (self.x, self.y))
+
+# class Score():
+
+
+b = Beer()
+tara = Tara()
+
+my_list = []
+for i in range(5):
+    my_object = Beer()
+    my_list.append(my_object)
+
+
+while running:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            running = False
+
+    screen.fill(white)
+
+    for el in my_list:
+        el.draw()
+        el.move()
+
+    tara.draw(screen)
+    tara.Tara_move()
+
+    pygame.display.update()
+
+    clock.tick(60)
