@@ -12,7 +12,11 @@ class Rectangle:
         self.height = random.randint(30, 90)
         self.width = random.randint(30, 90)
         self.change_x = random.randint(-3, 3)
+        if self.change_x == 0:
+            self.change_x = 1
         self.change_y = random.randint(-3, 3)
+        if self.change_y == 0:
+            self.change_y = -1
         self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
     def draw(self):
