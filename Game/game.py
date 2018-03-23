@@ -1,28 +1,23 @@
 import pygame
-import random
 
 #static variabel
 _WEIGHT = 800
 _LENGTH = 600
 _PLAY = True
 time = pygame.time.Clock()
+FPS = 60
 
 
 class Ball():
     def __init__(self):
         self._size = 10      # size x == size y
-        self.start_x = _WEIGHT // 2
-        self.start_y = (_LENGTH - _LENGTH*20//100) + self._size//2
+        self.start_x = 400
+        self.start_y = 150
         self._color = [200, 0, 0]
-        self.direction_of_movement = -2
+        self.direction_of_movement = 2
         self.direction_of_movement_x = 4
 
 
-
-    def corner(self):
-        self.left_and_right_corner = [self.start_x, self.start_y,
-                                      self.start_x + self._size,
-                                      self.start_y + self._size]
 
     def draw(self):
         pygame.draw.circle(screen, self._color,
@@ -30,19 +25,19 @@ class Ball():
                            self._size)
 
     def check_y(self):
-        if self.start_y <= 0:
-            self.start_y = 0
+        if self.start_y <= 10:
+            self.start_y = 10
             self.direction_of_movement *= -1
-        elif self.start_y >= 600:
-            self.start_y = 600
+        elif self.start_y >= 590:
+            self.start_y = 590
             self.direction_of_movement *= 0
 
     def check_x(self):
-        if self.start_x >= 800:
-            self.start_x = 800
+        if self.start_x >= 790:
+            self.start_x = 790
             self.direction_of_movement_x *= -1
-        elif self.start_x <= 0:
-            self.start_x = 0
+        elif self.start_x <= 10:
+            self.start_x = 10
             self.direction_of_movement_x *= -1
 
 
@@ -51,16 +46,15 @@ class Ball():
         self.start_y -= self.direction_of_movement
         self.check_y()
         self.check_x()
-        self.corner()
-        #self.draw()
+
 
 
 class Line():
     def __init__(self):
         self.length = 10
-        self.weight =  50
-        self.start_x = _WEIGHT // 2 - self.weight//2
-        self.start_y = (_LENGTH - _LENGTH*20//100) + self.length//2
+        self.weight = 50
+        self.start_x = 375
+        self.start_y = 475
         self.color = [0,0,200]
 
     def draw(self):
@@ -97,14 +91,20 @@ move_right = False
 
 def check():
     global points
-    if (t.start_y <= ball.start_y + 5 <= t.start_y + 10
+    global FPS
+    if (t.start_y < ball.start_y + 10 <= t.start_y + 10
         and t.start_x <= ball.start_x <= t.start_x + 50):
-        ball.start_y = t.start_y
+        ball.start_y = t.start_y - 10
         ball.direction_of_movement *= -1
         points += 100
+    if 0 <= points <= 1000:
+        FPS = 60 + points//10
+
+
+
 
 while _PLAY:
-    time.tick(30)
+    time.tick(FPS)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -126,10 +126,10 @@ while _PLAY:
         t.moving_left()
     if move_right:
         t.moving_right()
-    check()
     ball.move()
-    t.draw()
+    check()
     ball.draw()
+    t.draw()
     if ball.direction_of_movement == 0:
         _PLAY = False
     pygame.display.flip()
