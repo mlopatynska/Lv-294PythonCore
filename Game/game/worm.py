@@ -1,35 +1,35 @@
 import random, pygame, sys
 from pygame.locals import *
 
-FPS = 10
-WINDOWWIDTH = 640
-WINDOWHEIGHT = 480
-CELLSIZE = 20
-CELLWIDTH = int(WINDOWWIDTH / CELLSIZE)
-CELLHEIGHT = int(WINDOWHEIGHT / CELLSIZE)
+fps = 10
+window_x = 640
+window_y = 480
+cell = 20
+cells_x = int(window_x / cell)
+cells_y = int(window_y / cell)
 
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-DARKGREEN = (0, 155, 0)
-DARKGRAY = (40, 40, 40)
-BGCOLOR = BLACK
+white = (255, 255, 255)
+black = (0, 0, 0)
+red = (255, 0, 0)
+green = (0, 255, 0)
+darkgreen = (0, 155, 0)
+darkgray = (40, 40, 40)
+background = black
 
 UP = 'up'
 DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
 
-HEAD = 0 # index of the worm's head
+head = 0 # index of the worm's head
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, BASICFONT
+    global fpsclock, screen, mainfont
 
     pygame.init()
-    FPSCLOCK = pygame.time.Clock()
-    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-    BASICFONT = pygame.font.Font('freesansbold.ttf', 18)
+    fpsclock = pygame.time.Clock()
+    screen = pygame.display.set_mode((window_x, window_y))
+    mainfont = pygame.font.Font('freesansbold.ttf', 18)
     pygame.display.set_caption('Worm')
 
     showStartScreen()
@@ -39,9 +39,9 @@ def main():
 
 
 def runGame():
-    startx = random.randint(5, CELLWIDTH - 6)
-    starty = random.randint(5, CELLHEIGHT - 6)
-    wormCoords = [{'x': startx,     'y': starty},
+    startx = random.randint(5, cells_x - 6)
+    starty = random.randint(5, cells_y - 6)
+    worm_loc = [{'x': startx,     'y': starty},
                   {'x': startx - 1, 'y': starty},
                   {'x': startx - 2, 'y': starty}]
     direction = RIGHT
@@ -64,46 +64,46 @@ def runGame():
                 elif event.key == K_ESCAPE:
                     terminate()
 
-        if wormCoords[HEAD]['x'] == -1 or wormCoords[HEAD]['x'] == CELLWIDTH or \
-                wormCoords[HEAD]['y'] == -1 or wormCoords[HEAD]['y'] == CELLHEIGHT:
+        if worm_loc[head]['x'] == -1 or worm_loc[head]['x'] == cells_x or \
+                worm_loc[head]['y'] == -1 or worm_loc[head]['y'] == cells_y:
             return # gameover
-        for wormBody in wormCoords[1:]:
-            if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody['y'] == wormCoords[HEAD]['y']:
+        for wormBody in worm_loc[1:]:
+            if wormBody['x'] == worm_loc[head]['x'] and wormBody['y'] == worm_loc[head]['y']:
                 return # gameover
 
-        if wormCoords[HEAD]['x'] == apple['x'] and wormCoords[HEAD]['y'] == apple['y']:
+        if worm_loc[head]['x'] == apple['x'] and worm_loc[head]['y'] == apple['y']:
             apple = getRandomLocation()
         else:
-            del wormCoords[-1]
+            del worm_loc[-1]
 
         if direction == UP:
-            newHead = {'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] - 1}
+            new_head = {'x': worm_loc[head]['x'], 'y': worm_loc[head]['y'] - 1}
         elif direction == DOWN:
-            newHead = {'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] + 1}
+            new_head = {'x': worm_loc[head]['x'], 'y': worm_loc[head]['y'] + 1}
         elif direction == LEFT:
-            newHead = {'x': wormCoords[HEAD]['x'] - 1, 'y': wormCoords[HEAD]['y']}
+            new_head = {'x': worm_loc[head]['x'] - 1, 'y': worm_loc[head]['y']}
         elif direction == RIGHT:
-            newHead = {'x': wormCoords[HEAD]['x'] + 1, 'y': wormCoords[HEAD]['y']}
-        wormCoords.insert(0, newHead)
-        DISPLAYSURF.fill(BGCOLOR)
+            new_head = {'x': worm_loc[head]['x'] + 1, 'y': worm_loc[head]['y']}
+        worm_loc.insert(0, new_head)
+        screen.fill(background)
         drawGrid()
-        drawWorm(wormCoords)
+        drawWorm(worm_loc)
         drawApple(apple)
-        drawScore(len(wormCoords) - 3)
-        drawSpeed((len(wormCoords) - 3) // 5 + 1)
+        drawScore(len(worm_loc) - 3)
+        drawSpeed((len(worm_loc) - 3) // 5 + 1)
         pygame.display.update()
-        FPSCLOCK.tick(FPS + (len(wormCoords) - 3) // 5)
+        fpsclock.tick(fps + (len(worm_loc) - 3) // 5)
 
 
 def getRandomLocation():
-    return {'x': random.randint(0, CELLWIDTH - 1), 'y': random.randint(0, CELLHEIGHT - 1)}
+    return {'x': random.randint(0, cells_x - 1), 'y': random.randint(0, cells_y - 1)}
 
 
 def drawPressKeyMsg():
-    pressKeySurf = BASICFONT.render('Press any key to play', True, DARKGRAY)
+    pressKeySurf = mainfont.render('Press any key to play', True, darkgray)
     pressKeyRect = pressKeySurf.get_rect()
-    pressKeyRect.topleft = (WINDOWWIDTH - 200, WINDOWHEIGHT - 30)
-    DISPLAYSURF.blit(pressKeySurf, pressKeyRect)
+    pressKeyRect.topleft = (window_x - 200, window_y - 30)
+    screen.blit(pressKeySurf, pressKeyRect)
 
 
 def checkForKeyPress():
@@ -120,13 +120,13 @@ def checkForKeyPress():
 
 def showStartScreen():
     titleFont = pygame.font.Font('freesansbold.ttf', 100)
-    titleSurf = titleFont.render('Worm Game', True, WHITE, DARKGREEN)
+    titleSurf = titleFont.render('Worm Game', True, white, darkgreen)
     titleRect = titleSurf.get_rect()
-    titleRect.center = (WINDOWWIDTH / 2, WINDOWHEIGHT / 2)
+    titleRect.center = (window_x / 2, window_y / 2)
 
     while True:
-        DISPLAYSURF.fill(BGCOLOR)
-        DISPLAYSURF.blit(titleSurf, titleRect)
+        screen.fill(background)
+        screen.blit(titleSurf, titleRect)
 
         drawPressKeyMsg()
 
@@ -134,7 +134,7 @@ def showStartScreen():
             pygame.event.get() # clear event queue
             return
         pygame.display.update()
-        FPSCLOCK.tick(FPS)
+        fpsclock.tick(fps)
 
 
 def terminate():
@@ -144,15 +144,15 @@ def terminate():
 
 def showGameOverScreen():
     gameOverFont = pygame.font.Font('freesansbold.ttf', 150)
-    gameSurf = gameOverFont.render('Game', True, WHITE)
-    overSurf = gameOverFont.render('Over', True, WHITE)
+    gameSurf = gameOverFont.render('Game', True, white)
+    overSurf = gameOverFont.render('Over', True, white)
     gameRect = gameSurf.get_rect()
     overRect = overSurf.get_rect()
-    gameRect.midtop = (WINDOWWIDTH / 2, 10)
-    overRect.midtop = (WINDOWWIDTH / 2, gameRect.height + 10 + 25)
+    gameRect.midtop = (window_x / 2, 10)
+    overRect.midtop = (window_x / 2, gameRect.height + 10 + 25)
 
-    DISPLAYSURF.blit(gameSurf, gameRect)
-    DISPLAYSURF.blit(overSurf, overRect)
+    screen.blit(gameSurf, gameRect)
+    screen.blit(overSurf, overRect)
     drawPressKeyMsg()
     pygame.display.update()
     pygame.time.wait(500)
@@ -164,41 +164,41 @@ def showGameOverScreen():
             return
 
 def drawScore(score):
-    scoreSurf = BASICFONT.render('Score: {}'.format(score), True, WHITE)
+    scoreSurf = mainfont.render('Score: {}'.format(score), True, white)
     scoreRect = scoreSurf.get_rect()
-    scoreRect.topright = (WINDOWWIDTH - 130, 10)
-    DISPLAYSURF.blit(scoreSurf, scoreRect)
+    scoreRect.topright = (window_x - 130, 10)
+    screen.blit(scoreSurf, scoreRect)
 
 
 def drawSpeed(speed):
-    scoreSurf = BASICFONT.render('Speed: {}'.format(speed), True, WHITE)
+    scoreSurf = mainfont.render('Speed: {}'.format(speed), True, white)
     scoreRect = scoreSurf.get_rect()
-    scoreRect.topleft = (WINDOWWIDTH - 120, 10)
-    DISPLAYSURF.blit(scoreSurf, scoreRect)
+    scoreRect.topleft = (window_x - 120, 10)
+    screen.blit(scoreSurf, scoreRect)
 
 
 def drawWorm(wormCoords):
     for coord in wormCoords:
-        x = coord['x'] * CELLSIZE
-        y = coord['y'] * CELLSIZE
-        wormSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
-        pygame.draw.rect(DISPLAYSURF, DARKGREEN, wormSegmentRect)
-        wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, CELLSIZE - 8, CELLSIZE - 8)
-        pygame.draw.rect(DISPLAYSURF, GREEN, wormInnerSegmentRect)
+        x = coord['x'] * cell
+        y = coord['y'] * cell
+        wormSegmentRect = pygame.Rect(x, y, cell, cell)
+        pygame.draw.rect(screen, darkgreen, wormSegmentRect)
+        wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, cell - 8, cell - 8)
+        pygame.draw.rect(screen, green, wormInnerSegmentRect)
 
 
 def drawApple(coord):
-    x = coord['x'] * CELLSIZE
-    y = coord['y'] * CELLSIZE
-    appleRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
-    pygame.draw.rect(DISPLAYSURF, RED, appleRect)
+    x = coord['x'] * cell
+    y = coord['y'] * cell
+    appleRect = pygame.Rect(x, y, cell, cell)
+    pygame.draw.rect(screen, red, appleRect)
 
 
 def drawGrid():
-    for x in range(0, WINDOWWIDTH, CELLSIZE):
-        pygame.draw.line(DISPLAYSURF, DARKGRAY, (x, 0), (x, WINDOWHEIGHT))
-    for y in range(0, WINDOWHEIGHT, CELLSIZE):
-        pygame.draw.line(DISPLAYSURF, DARKGRAY, (0, y), (WINDOWWIDTH, y))
+    for x in range(0, window_x, cell):
+        pygame.draw.line(screen, darkgray, (x, 0), (x, window_y))
+    for y in range(0, window_y, cell):
+        pygame.draw.line(screen, darkgray, (0, y), (window_x, y))
 
 
 if __name__ == '__main__':
